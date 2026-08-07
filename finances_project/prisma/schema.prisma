@@ -8,13 +8,76 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
+enum ExpenseCategory {
+  Food
+  Transport
+  Housing
+  Health
+  Education
+  Leisure
+  Shopping
+  Bills
+  Other
+}
+
 datasource db {
   provider = "postgresql"
 }
 
+
+// Usando indexes para otimizar a busca
 model User {
   id String @id @default(cuid())
   name String
   email String @unique
   password String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  accounts Account[]
+}
+
+model Account {
+  id String @id @default(cuid())
+  user_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  budgets Budget[]
+
+  @@index([user_id])
+}
+
+model Budget {
+  id String @id @default(cuid())
+  acc_id String
+
+  budget_value Int
+  start_date DateTime @default(now())
+  end_date DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  account Account @relation(fields: [acc_id], references: [id], onDelete: Cascade)
+  expense Expense[]
+
+  @@index([acc_id])
+}
+
+model Expense {
+  id String @id @default(cuid())
+  budget_id String
+  spent_value Int
+  category ExpenseCategory
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  budget Budget @relation(fields: [budget_id], references: [id], onDelete: Cascade)
+
+  @@index([budget_id])
 }
