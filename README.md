@@ -27,3 +27,25 @@ O gasto contém:
 
 
 *Porém, vou manter simples até completar o funcionamento principal*
+
+
+# Modelagem do banco de dados
+
+### Usuário
+
+O usuário tem os atributos padrão (nome, email, senha, id) e um array de contas
+Preferi usar um array para que eu tenha a possibilidade de expandir para a criação de múltiplas contas no futuro
+
+### Conta
+
+Tem um id, user_id (usuário ao qual ela pertence), um array de orçamentos (para cada mês ou espaço de tempo delimitado)
+
+### Orçamento
+
+Tem um id, acc_id (conta à qual ele pertence), data de início (momento em que o usuário o cria, por enquanto) e data de fim (30 dias após a data de início) e valor do orçamento
+
+Futuramente, a data de início vai poder ser estipulada pelo usuário de maneira mais flexível
+
+### Despesa
+
+Uma despesa vai ter um id, um budget_id (orçamento ao qual faz referência), valor gasto e categoria do gasto
