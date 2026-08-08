@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from "@/components/ui/card"
@@ -19,6 +18,7 @@ export default function Home() {
   const [accounts, setAccounts] = useState<Account[]>([])
   const [newAccountName, setNewAccountName] = useState('')
   const [error, setError] = useState('')
+  const [isFormOpen, setIsFormOpen] = useState(false)
 
   const router = useRouter()
 
@@ -43,7 +43,7 @@ export default function Home() {
     
     const { ok, data, status } = await apiFetch('/api/accounts', {
       method: 'POST',
-      body: JSON.stringify({account_name: newAccountName})
+      body: JSON.stringify({ account_name: newAccountName })
     })
     
     if (status === 401) {
@@ -58,6 +58,7 @@ export default function Home() {
     
     fetchAccounts()
     setNewAccountName('')
+    setIsFormOpen(false)
   }
 
   useEffect(() => {
@@ -65,58 +66,73 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <nav className="min-w-[20%] border-l-1 border-black-500 grid grid-cols-1 gap-5">
-        <h3>Menu</h3>
+    <div className="flex min-h-screen">
+      <nav className="w-56 shrink-0 border-r shadow-sm flex flex-col gap-3 p-4">
+        <h3 className="font-semibold mb-2">Menu</h3>
 
         {/* Links verdadeiros serão adicionados mais tarde */}
-        <Button>My account</Button>
-        <Button>Dashboard</Button>
-        <Button>How to use</Button>
+        <Button variant="ghost" className="justify-start">My account</Button>
+        <Button variant="ghost" className="justify-start">Dashboard</Button>
+        <Button variant="ghost" className="justify-start">How to use</Button>
       </nav>
 
-      <main className="min-w-[80%]">
+      <main className="flex-1 p-8 flex flex-col gap-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Your accounts</h2>
+          <Button onClick={() => setIsFormOpen((prev) => !prev)}>
+            {isFormOpen ? 'Cancel' : 'Create account'}
+          </Button>
+        </div>
+
+        {isFormOpen && (
+          <Card className="dark w-full max-w-md">
+            <CardHeader>
+              <CardTitle>Create a new account</CardTitle>
+              <CardDescription>Give a name to this account and create a budget!</CardDescription>
+            </CardHeader>
+
+            <CardContent>
+              <form onSubmit={handleCreateAccount}>
+                <div className="flex flex-col gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="account_name">Account name</Label>
+                    <Input
+                      required
+                      id="account_name"
+                      type="text"
+                      value={newAccountName}
+                      onChange={(e) => setNewAccountName(e.target.value)}
+                    />
+                  </div>
+
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
+
+                  <Button type="submit" className="w-fit">Create</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        )}
+
         {accounts.length === 0 ? (
-          <section className="grid grid-cols-1 gap-4 text-center">
-            <h1>You have no account yet!</h1>
-            <Button>Create one here</Button>
+          <section className="grid grid-cols-1 gap-4 text-center py-12">
+            <h1 className="text-lg">You have no account yet!</h1>
             {error && <p className="text-red-500">{error}</p>}
           </section>
         ) : (
-          <section>
+          <section className="grid grid-cols-3 gap-4">
             {accounts.map((acc: Account) => (
-              <Card key={acc.id}>
-                <CardTitle>{acc.account_name}</CardTitle>
-                <CardContent>{acc.created_at}</CardContent>
+              <Card key={acc.id} className="dark">
+                <CardHeader>
+                  <CardTitle>{acc.account_name}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground">
+                  {acc.created_at}
+                </CardContent>
               </Card>
             ))}
           </section>
         )}
-
-        <Card className="w-full max-w-md dark">
-          <CardHeader>
-            <CardTitle>Create a new account</CardTitle>
-            <CardDescription>Give a name to this account and create a budget!</CardDescription>
-          </CardHeader>
-
-          <CardContent>
-            <form onSubmit={(e) => handleCreateAccount(e)}>
-              <div className="flex flex-col gap-8">
-                <div className="grid gap-2">
-                  <Label htmlFor="account_name">Account name</Label>
-                  <Input required id="account_name" type="text" onChange={(e) => setNewAccountName(e.target.value)}/>
-                </div>
-
-
-                {error && <p className="text-red-500">{error}</p>}
-              </div>
-            </form>
-          </CardContent>
-
-          <CardFooter>
-            <Button type="submit">Create</Button>
-          </CardFooter>
-        </Card>
       </main>
     </div>
   );

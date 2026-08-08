@@ -69,7 +69,7 @@ const Page = () => {
             </div>
         </CardContent>
 
-        <CardFooter className="flex-col gap-2">
+        <CardFooter className="flex-col gap-2 mt-4">
           <Button type="submit">Register</Button>
           <Button onClick={() => router.push('/login')}>Already have an account? Log in</Button>
         </CardFooter>
