@@ -59,6 +59,7 @@ model Budget {
   budget_value Int
   start_date DateTime @default(now())
   end_date DateTime
+  budget_name String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
