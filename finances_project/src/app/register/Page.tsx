@@ -40,14 +40,14 @@ const Page = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md dark">
         <CardHeader>
           <CardTitle>Register</CardTitle>
           <CardDescription>Enter your data bellow to create an account</CardDescription>
         </CardHeader>
 
+      <form onSubmit={(e) => handleSubmit(e)}>
         <CardContent>
-          <form onSubmit={(e) => handleSubmit(e)}>
             <div className="flex flex-col gap-8">
 
               <div className="grid gap-2">
@@ -67,13 +67,13 @@ const Page = () => {
 
               {error && <p className="text-red-500">{error}</p>}
             </div>
-          </form>
         </CardContent>
 
         <CardFooter className="flex-col gap-2">
           <Button type="submit">Register</Button>
           <Button onClick={() => router.push('/login')}>Already have an account? Log in</Button>
         </CardFooter>
+      </form>
 
       </Card>
     </div>

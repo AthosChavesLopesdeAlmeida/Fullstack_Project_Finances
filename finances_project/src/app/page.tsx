@@ -65,8 +65,8 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex">
-      <nav className="min-w-[20%] border-l-1 border-black-500 grid grid-cols-1 gap-5 bg-blue-500">
+    <div className="flex justify-center items-center min-h-screen">
+      <nav className="min-w-[20%] border-l-1 border-black-500 grid grid-cols-1 gap-5">
         <h3>Menu</h3>
 
         {/* Links verdadeiros serão adicionados mais tarde */}
@@ -75,7 +75,7 @@ export default function Home() {
         <Button>How to use</Button>
       </nav>
 
-      <main className="min-w-[80%] bg-red-500">
+      <main className="min-w-[80%]">
         {accounts.length === 0 ? (
           <section className="grid grid-cols-1 gap-4 text-center">
             <h1>You have no account yet!</h1>
@@ -93,7 +93,7 @@ export default function Home() {
           </section>
         )}
 
-        <Card className="w-300 h-500">
+        <Card className="w-full max-w-md dark">
           <CardHeader>
             <CardTitle>Create a new account</CardTitle>
             <CardDescription>Give a name to this account and create a budget!</CardDescription>
