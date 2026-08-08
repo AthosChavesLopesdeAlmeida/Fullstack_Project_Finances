@@ -1,3 +1,4 @@
+'use client'
 import { apiFetch } from "@/lib/fetcher"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -19,11 +20,12 @@ const Page = () => {
 
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault()
     setError('')
 
     const {ok, data} = await apiFetch("api/auth/login", {
+      method: 'POST',
       body: JSON.stringify({ password, email })
     })
 
@@ -36,37 +38,40 @@ const Page = () => {
   }
 
   return (
-    <Card className="w-400 h-600">
-      <CardHeader>
-        <CardTitle>Register</CardTitle>
-        <CardDescription>Enter your data bellow to create an account</CardDescription>
-      </CardHeader>
+    <div className="flex justify-center items-center min-h-screen">
 
-      <CardContent>
-        <form onClick={(e) => handleSubmit(e)}>
-          <div className="flex flex-col gap-8">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Log in</CardTitle>
+          <CardDescription>Enter your data bellow to log in</CardDescription>
+        </CardHeader>
 
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input required id="email" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="email@example.com"/>
+        <CardContent>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className="flex flex-col gap-8">
+
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input required id="email" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="email@example.com"/>
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input required id="password" type="password" onChange={(e) => setPassword(e.target.value)}/>
+              </div>
+
+              {error && <p className="text-red-500">{error}</p>}
             </div>
+          </form>
+        </CardContent>
 
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input required id="password" type="password" onChange={(e) => setPassword(e.target.value)}/>
-            </div>
+        <CardFooter className="flex-col gap-2">
+          <Button type="submit">log in</Button>
+          <Button onClick={() => router.push('/register')}>No account? Create one here</Button>
+        </CardFooter>
 
-            {error && <p className="text-red-500">{error}</p>}
-          </div>
-        </form>
-      </CardContent>
-
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit">Register</Button>
-        <Button onClick={() => router.push('/register')}>No account? Create one here</Button>
-      </CardFooter>
-
-    </Card>
+      </Card>
+    </div>
   )
 }
 
