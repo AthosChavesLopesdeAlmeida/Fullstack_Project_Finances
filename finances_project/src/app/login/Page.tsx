@@ -40,7 +40,7 @@ const Page = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
 
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md dark">
         <CardHeader>
           <CardTitle>Log in</CardTitle>
           <CardDescription>Enter your data bellow to log in</CardDescription>
