@@ -6,10 +6,18 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription 
+} from "@/components/ui/dialog"
+
 import { 
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle
 } from "@/components/ui/card"
@@ -84,7 +92,35 @@ export default function Home() {
           </Button>
         </div>
 
-        {isFormOpen && (
+        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create a new account</DialogTitle>
+              <DialogDescription>Give a name to this account and create a budget</DialogDescription>
+            </DialogHeader>
+
+              <form onSubmit={handleCreateAccount}>
+                <div className="flex flex-col gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="account_name">Account name</Label>
+                    <Input
+                      required
+                      id="account_name"
+                      type="text"
+                      value={newAccountName}
+                      onChange={(e) => setNewAccountName(e.target.value)}
+                    />
+                  </div>
+
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
+
+                  <Button type="submit" className="w-fit hover:cursor-pointer">Create</Button>
+                </div>
+              </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* {isFormOpen && (
           <Card className="dark w-full max-w-md">
             <CardHeader>
               <CardTitle>Create a new account</CardTitle>
@@ -112,7 +148,7 @@ export default function Home() {
               </form>
             </CardContent>
           </Card>
-        )}
+        )} */}
 
         {accounts.length === 0 ? (
           <section className="grid grid-cols-1 gap-4 text-center py-12">

@@ -7,6 +7,16 @@ import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription 
+} from "@/components/ui/dialog"
+
+
 import { 
   Card,
   CardContent,
@@ -109,7 +119,70 @@ export default function Home() {
           </Button>
         </div>
 
-        {isFormOpen && (
+
+
+        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create a new account</DialogTitle>
+              <DialogDescription>Give a name to this account and create a budget</DialogDescription>
+            </DialogHeader>
+
+              <form onSubmit={handleCreateBudget}>
+                <div className="flex flex-col gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="budget_name">Budget name</Label>
+                    <Input
+                      required
+                      id="budget_name"
+                      type="text"
+                      value={newBudgetName}
+                      onChange={(e) => setNewBudgetName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="grid gap-2">
+                    <Label htmlFor="value">Budget value</Label>
+                    <Input
+                      required
+                      id="value"
+                      type="number"
+                      value={value}
+                      onChange={(e) => setValue(Number(e.target.value))}
+                    />
+                  </div>
+
+                  <div className="grid gap-2">
+                    <Label htmlFor="start_date">Start date</Label>
+                    <Input
+                      required
+                      id="start_date"
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="grid gap-2">
+                    <Label htmlFor="end_date">End date</Label>
+                    <Input
+                      required
+                      id="end_date"
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
+
+                  {error && <p className="text-red-500 text-sm">{error}</p>}
+
+                  <Button type="submit" className="w-fit hover:cursor-pointer">Create</Button>
+                </div>
+              </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* {isFormOpen && (
           <Card className="dark w-full max-w-md">
             <CardHeader>
               <CardTitle>Create a new budget</CardTitle>
@@ -170,7 +243,7 @@ export default function Home() {
               </form>
             </CardContent>
           </Card>
-        )}
+        )} */}
 
         {budgets.length === 0 ? (
           <section className="grid grid-cols-1 gap-4 text-center py-12">
