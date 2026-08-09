@@ -28,3 +28,26 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
   return NextResponse.json(budgets)
 }
+
+export async function DELETE (req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const user = await getUserFromRequest(req)
+  if (!user) {
+    return NextResponse.json({ message: 'User unauthorized' }, { status: 401 })
+  }
+
+  const { id } = await params
+
+  const account = await prisma.account.findUnique({
+    where: {id}
+  })
+
+  if (!account) {
+    return NextResponse.json({ message: 'Account not found' }, { status: 400 })
+  }
+
+  await prisma.account.delete({
+    where: {id, user_id: user.userId}
+  })
+
+  return NextResponse.json({message: 'Account deleted with success'}, {status: 200})
+}
