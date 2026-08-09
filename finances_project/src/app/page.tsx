@@ -71,15 +71,15 @@ export default function Home() {
         <h3 className="font-semibold mb-2">Menu</h3>
 
         {/* Links verdadeiros serão adicionados mais tarde */}
-        <Button variant="ghost" className="justify-start">My account</Button>
-        <Button variant="ghost" className="justify-start">Dashboard</Button>
-        <Button variant="ghost" className="justify-start">How to use</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">My account</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
       </nav>
 
       <main className="flex-1 p-8 flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Your accounts</h2>
-          <Button onClick={() => setIsFormOpen((prev) => !prev)}>
+          <Button onClick={() => setIsFormOpen((prev) => !prev)} className="hover:cursor-pointer">
             {isFormOpen ? 'Cancel' : 'Create account'}
           </Button>
         </div>
@@ -107,7 +107,7 @@ export default function Home() {
 
                   {error && <p className="text-red-500 text-sm">{error}</p>}
 
-                  <Button type="submit" className="w-fit">Create</Button>
+                  <Button type="submit" className="w-fit hover:cursor-pointer">Create</Button>
                 </div>
               </form>
             </CardContent>
@@ -122,12 +122,12 @@ export default function Home() {
         ) : (
           <section className="grid grid-cols-3 gap-4">
             {accounts.map((acc: Account) => (
-              <Card key={acc.id} className="dark">
+              <Card key={acc.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/account/${acc.id}`)}>
                 <CardHeader>
                   <CardTitle>{acc.account_name}</CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm text-muted-foreground">
-                  {acc.created_at}
+                  Conta criada em {new Date(acc.created_at).toLocaleDateString()}
                 </CardContent>
               </Card>
             ))}

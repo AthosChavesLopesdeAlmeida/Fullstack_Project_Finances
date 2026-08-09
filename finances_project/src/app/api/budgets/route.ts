@@ -14,10 +14,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'All fields are required' }, { status: 400 })
   }
 
-  const existing = await prisma.budget.findFirst({
-    where: { budget_name: budget_name, acc_id: acc_id },
+  const existing = await prisma.budget.findUnique({
+    where: {
+      acc_id_budget_name: { acc_id, budget_name },
+    },
   })
-
+  
   if (existing) {
     return NextResponse.json({ message: 'An budget with this name already exists' }, { status: 400 })
   }
@@ -25,9 +27,9 @@ export async function POST(req: NextRequest) {
   const budget = await prisma.budget.create({
     data: { 
       budget_value: value, 
-      end_date: end_date, 
+      end_date: new Date(end_date), 
       acc_id: acc_id, 
-      start_date: start_date, 
+      start_date: new Date(start_date), 
       budget_name: budget_name 
     }
   })

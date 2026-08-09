@@ -68,6 +68,7 @@ model Budget {
   expense Expense[]
 
   @@index([acc_id])
+  @@unique([acc_id, budget_name])
 }
 
 model Expense {

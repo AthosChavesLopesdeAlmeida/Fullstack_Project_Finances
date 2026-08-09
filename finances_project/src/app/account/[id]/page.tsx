@@ -96,15 +96,15 @@ export default function Home() {
         <h3 className="font-semibold mb-2">Menu</h3>
 
         {/* Links verdadeiros serão adicionados mais tarde */}
-        <Button variant="ghost" className="justify-start">My account</Button>
-        <Button variant="ghost" className="justify-start">Dashboard</Button>
-        <Button variant="ghost" className="justify-start">How to use</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">My account</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
       </nav>
 
       <main className="flex-1 p-8 flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Your budgets</h2>
-          <Button onClick={() => setIsFormOpen((prev) => !prev)}>
+          <Button onClick={() => setIsFormOpen((prev) => !prev)} className="hover:cursor-pointer">
             {isFormOpen ? 'Cancel' : 'Create budget'}
           </Button>
         </div>
@@ -113,7 +113,7 @@ export default function Home() {
           <Card className="dark w-full max-w-md">
             <CardHeader>
               <CardTitle>Create a new budget</CardTitle>
-              <CardDescription>Give a name to this account and create a budget!</CardDescription>
+              <CardDescription>Give a name to this budget and create it!</CardDescription>
             </CardHeader>
 
             <CardContent>
@@ -165,7 +165,7 @@ export default function Home() {
 
                   {error && <p className="text-red-500 text-sm">{error}</p>}
 
-                  <Button type="submit" className="w-fit">Create</Button>
+                  <Button type="submit" className="w-fit hover:cursor-pointer">Create</Button>
                 </div>
               </form>
             </CardContent>
@@ -180,7 +180,7 @@ export default function Home() {
         ) : (
           <section className="grid grid-cols-3 gap-4">
             {budgets.map((bud: Budget ) => (
-              <Card key={bud.id} className="dark">
+              <Card key={bud.id} className="dark hover:cursor-pointer">
                 <CardHeader>
                   <CardTitle>{bud.name}</CardTitle>
                   <CardDescription>Valor: {bud.value}</CardDescription>
