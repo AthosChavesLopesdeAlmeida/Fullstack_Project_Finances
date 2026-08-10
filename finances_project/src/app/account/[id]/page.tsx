@@ -271,7 +271,7 @@ export default function Home() {
         ) : (
           <section className="grid grid-cols-3 gap-4">
             {budgets.map((bud: Budget ) => (
-              <Card key={bud.id} className="dark hover:cursor-pointer">
+              <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${id}`)}>
                 <CardHeader className="gap-4">
                   <CardTitle>{bud.budget_name}</CardTitle>
                   <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
