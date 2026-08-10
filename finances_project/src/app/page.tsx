@@ -69,6 +69,24 @@ export default function Home() {
     setIsFormOpen(false)
   }
 
+  const handleDeleteAccount = async (id: string) => {
+    const { ok, status, data } = await apiFetch(`/api/accounts/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (status === 401) {
+      router.push('/register')
+      return
+    }
+    
+    if (!ok) {
+      setError(data?.message || 'Error deleting this account')
+      return
+    }
+    
+    fetchAccounts()
+  }
+
   useEffect(() => {
     fetchAccounts()
   }, [])
@@ -162,8 +180,9 @@ export default function Home() {
                 <CardHeader>
                   <CardTitle>{acc.account_name}</CardTitle>
                 </CardHeader>
-                <CardContent className="text-sm text-muted-foreground">
+                <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                   Conta criada em {new Date(acc.created_at).toLocaleDateString()}
+                  <Button onClick={() => handleDeleteAccount(acc.id)} className="w-1/2">Delete</Button>
                 </CardContent>
               </Card>
             ))}

@@ -81,10 +81,10 @@ export default function Home() {
       return
     }
 
-  if (new Date(endDate) < new Date(startDate)) {
-    setError('End date must be after start date')
-    return
-  }
+    if (new Date(endDate) < new Date(startDate)) {
+      setError('End date must be after start date')
+      return
+    }
     
     fetchBudgets()
 
@@ -94,6 +94,24 @@ export default function Home() {
     setEndDate('')
 
     setIsFormOpen(false)
+  }
+
+  const handleDeleteBudget = async (id: string) => {
+    const { ok, data, status } = await apiFetch(`/api/budgets/${id}`, {
+      method: 'DELETE'
+    })
+
+    if (status === 401) {
+      router.push('/register')
+      return
+    }
+    
+    if (!ok) {
+      setError(data?.message || 'Error deleting budget')
+      return
+    }
+
+    fetchBudgets()
   }
 
   useEffect(() => {
@@ -254,13 +272,14 @@ export default function Home() {
           <section className="grid grid-cols-3 gap-4">
             {budgets.map((bud: Budget ) => (
               <Card key={bud.id} className="dark hover:cursor-pointer">
-                <CardHeader>
-                  <CardTitle>{bud.name}</CardTitle>
-                  <CardDescription>Valor: {bud.value}</CardDescription>
+                <CardHeader className="gap-4">
+                  <CardTitle>{bud.budget_name}</CardTitle>
+                  <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
                 </CardHeader>
 
-                <CardContent className="text-sm text-muted-foreground">
-                  De: {new Date(bud.start_date).toLocaleDateString()} - Até: {new Date(bud.end_date).toLocaleDateString()}
+                <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
+                  Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
+                  <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2">Delete</Button>
                 </CardContent>
               </Card>
             ))}
