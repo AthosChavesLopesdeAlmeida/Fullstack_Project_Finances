@@ -22,6 +22,8 @@ import {
 
 import { 
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle
 } from "@/components/ui/card"
@@ -108,7 +110,8 @@ const Page = () => {
     }
 
     setExpenses(data)
-    calculateTotalSpent()
+    const total = data.reduce((sum: number, exp: Expense) => sum + Number(exp.spent_value), 0)
+    setTotalSpent(total)
   }
 
   const fetchSpecificBudget = async (id: string) => {
@@ -129,17 +132,6 @@ const Page = () => {
     setBudget(data)
   }
 
-
-  const calculateTotalSpent = () => {
-    let total = 0
-
-    for (const expense of expenses) {
-      total += Number(expense.spent_value)
-    }
-
-    setTotalSpent(total)
-  }
-
   useEffect(() => {
     fetchSpecificBudget(id)
   }, [id])
@@ -153,7 +145,7 @@ const Page = () => {
       <nav className="w-56 shrink-0 border-r shadow-sm flex flex-col gap-3 p-4">
         <h3 className="font-semibold mb-2">Menu</h3>
 
-        {/* Links verdadeiros serão adicionados mais tarde */}
+        {/* Links verdadeiros mais tarde */}
         <Button variant="ghost" className="justify-start hover:cursor-pointer">Your account</Button>
         <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
         <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
@@ -168,22 +160,31 @@ const Page = () => {
             </Button>
           </div>
 
-          <div className="flex items-center justify-between">
-            <Card className="dark hover:cursor-pointer">
+          <div className="grid grid-cols-3 gap-6">
+            <Card className="py-8 dark">
               <CardHeader>
-                <CardTitle>{budget ? `Budget: ${Number(budget?.budget_value).toFixed(2)}` : 'Loading...'}</CardTitle>
+                <CardDescription>Budget</CardDescription>
+                <CardTitle className="text-3xl">
+                  {budget ? `$${Number(budget.budget_value).toFixed(2)}` : 'Loading...'}
+                </CardTitle>
               </CardHeader>
             </Card>
 
-            <Card className="dark hover:cursor-pointer">
+            <Card className="py-8 dark">
               <CardHeader>
-                <CardTitle>{totalSpent ? `Spent: ${Number(totalSpent).toFixed(2)}` : 'Loading...'}</CardTitle>
+                <CardDescription>Spent</CardDescription>
+                <CardTitle className="text-3xl">
+                  {`$${Number(totalSpent).toFixed(2)}`}
+                </CardTitle>
               </CardHeader>
             </Card>
 
-            <Card className="dark hover:cursor-pointer">
+            <Card className="py-8 dark">
               <CardHeader>
-                <CardTitle>{totalSpent && budget ? `Remaining: ${Number(budget.budget_value - totalSpent).toFixed(2)}` : 'Loading...'}</CardTitle>
+                <CardDescription>Remaining</CardDescription>
+                <CardTitle className="text-3xl">
+                  {budget ? `$${Number(budget.budget_value - totalSpent).toFixed(2)}` : 'Loading...'}
+                </CardTitle>
               </CardHeader>
             </Card>
           </div>
@@ -233,31 +234,32 @@ const Page = () => {
           </DialogContent>
         </Dialog>
 
-        <Table>
-          <TableCaption>All of your expenses in this budget</TableCaption>
-          <TableHeader>
-            <TableRow>Value spent</TableRow>
-            <TableHead>Category</TableHead>
-            <TableHead>Date</TableHead>
-          </TableHeader>
-          <TableBody>
-            {expenses.map((exp: Expense) => {
-              return (
-                <TableCell key={exp.id}>${Number(exp.spent_value).toFixed(2)}</TableCell>
-              )
-            })}
-            {expenses.map((exp: Expense) => {
-              return (
-                <TableCell key={exp.id}><Badge variant="default">{exp.category}</Badge></TableCell>
-              )
-            })}
-            {expenses.map((exp: Expense) => {
-              return (
-                <TableCell key={exp.id}>{new Date(exp.created_at).toLocaleDateString()}</TableCell>
-              )
-            })}
-          </TableBody>
-        </Table>
+        <Card>
+          <CardHeader>
+            <CardTitle>Expenses</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableCaption>All of your expenses in this budget</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Value spent</TableHead>
+                  <TableHead>Category</TableHead>
+                  <TableHead>Date</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {expenses.map((exp: Expense) => (
+                  <TableRow key={exp.id}>
+                    <TableCell>${Number(exp.spent_value).toFixed(2)}</TableCell>
+                    <TableCell><Badge variant="default">{exp.category}</Badge></TableCell>
+                    <TableCell>{new Date(exp.created_at).toLocaleDateString()}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
         
       </main>
     </div>
