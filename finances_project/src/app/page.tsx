@@ -97,7 +97,7 @@ export default function Home() {
         <h3 className="font-semibold mb-2">Menu</h3>
 
         {/* Links verdadeiros serão adicionados mais tarde */}
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">My account</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}>My account</Button>
         <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
         <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
       </nav>

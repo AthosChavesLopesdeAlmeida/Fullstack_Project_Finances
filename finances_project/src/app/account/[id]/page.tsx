@@ -124,7 +124,7 @@ export default function Home() {
         <h3 className="font-semibold mb-2">Menu</h3>
 
         {/* Links verdadeiros serão adicionados mais tarde */}
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">My account</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}>My account</Button>
         <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
         <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
       </nav>
@@ -269,9 +269,9 @@ export default function Home() {
             {error && <p className="text-red-500">{error}</p>}
           </section>
         ) : (
-          <section className="grid grid-cols-3 gap-4">
+          <section className="grid grid-cols-4 gap-6">
             {budgets.map((bud: Budget ) => (
-              <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${id}`)}>
+              <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
                 <CardHeader className="gap-4">
                   <CardTitle>{bud.budget_name}</CardTitle>
                   <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
