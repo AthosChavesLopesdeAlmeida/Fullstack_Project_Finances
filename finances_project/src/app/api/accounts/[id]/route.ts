@@ -19,14 +19,16 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 
   const budgets = await prisma.budget.findMany({
-    where: { acc_id: account.id }
+    where: { acc_id: account.id },
+    include: { expense: true }
   })
 
-  if (!budgets) {
-    return NextResponse.json({ message: 'No budgets found' }, { status: 200 })
-  }
+  const budgetsWithSpent = budgets.map((b) => ({
+    ...b,
+    total_spent: b.expense.reduce((sum, e) => sum + e.spent_value, 0)
+  }))
 
-  return NextResponse.json(budgets)
+  return NextResponse.json(budgetsWithSpent)
 }
 
 export async function DELETE (req: NextRequest, { params }: { params: Promise<{ id: string }> }) {

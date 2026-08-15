@@ -114,6 +114,16 @@ export default function Home() {
     fetchBudgets()
   }
 
+  const classifyBudget = (bud: Budget) => {
+    const now = new Date()
+    const isExpired = new Date(bud.end_date) < now
+    const isOverBudget = bud.total_spent > bud.budget_value
+
+    if (isOverBudget) return 'exceeded'
+    if (isExpired) return 'expired'
+    return 'active'
+  }
+
   useEffect(() => {
     fetchBudgets()
   }, [id])
@@ -131,7 +141,7 @@ export default function Home() {
 
       <main className="flex-1 p-8 flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Your budgets</h2>
+          <h2 className="text-2xl font-bold">Your budgets</h2>
           <Button onClick={() => setIsFormOpen((prev) => !prev)} className="hover:cursor-pointer">
             {isFormOpen ? 'Cancel' : 'Create budget'}
           </Button>
@@ -269,20 +279,68 @@ export default function Home() {
             {error && <p className="text-red-500">{error}</p>}
           </section>
         ) : (
-          <section className="grid grid-cols-4 gap-6">
-            {budgets.map((bud: Budget ) => (
-              <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
-                <CardHeader className="gap-4">
-                  <CardTitle>{bud.budget_name}</CardTitle>
-                  <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
-                </CardHeader>
+          <section className="flex flex-col gap-15">
 
-                <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
-                  Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                  <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2">Delete</Button>
-                </CardContent>
-              </Card>
-            ))}
+            <Card className="flex gap-4">
+              <CardHeader className="text-xl font-semibold">Active budgets</CardHeader>
+
+              <section className="grid grid-cols-4 gap-6 p-3">
+                {budgets.filter((bud) => classifyBudget(bud) === 'active').map((bud: Budget)=> (
+                  <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
+                    <CardHeader className="gap-4">
+                      <CardTitle>{bud.budget_name}</CardTitle>
+                      <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
+                    </CardHeader>
+
+                    <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
+                      Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2 bg-red-500 hover:bg-red-900">Delete</Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </section>             
+            </Card>
+
+            <Card className="flex gap-4">
+              <CardHeader className="text-xl font-semibold">Expired budgets</CardHeader>
+
+              <section className="grid grid-cols-4 gap-6 p-3">
+                {budgets.filter((bud) => classifyBudget(bud) === 'expired').map((bud: Budget) => (
+                  <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
+                    <CardHeader className="gap-4">
+                      <CardTitle>{bud.budget_name}</CardTitle>
+                      <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
+                    </CardHeader>
+
+                    <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
+                      Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2 bg-red-500 hover:bg-red-900">Delete</Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </section>             
+            </Card>          
+
+            <Card className="flex gap-4">
+              <CardHeader className="text-xl font-semibold">Overrun budgets</CardHeader>
+
+              <section className="grid grid-cols-4 gap-6 p-3">
+                {budgets.filter((bud) => classifyBudget(bud) === 'exceeded').map((bud: Budget) => (
+                  <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
+                    <CardHeader className="gap-4">
+                      <CardTitle>{bud.budget_name}</CardTitle>
+                      <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
+                    </CardHeader>
+
+                    <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
+                      Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2 bg-red-500 hover:bg-red-900">Delete</Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </section>             
+            </Card>         
+
           </section>
         )}
       </main>

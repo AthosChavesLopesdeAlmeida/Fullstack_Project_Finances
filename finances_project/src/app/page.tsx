@@ -174,19 +174,20 @@ export default function Home() {
             {error && <p className="text-red-500">{error}</p>}
           </section>
         ) : (
-          <section className="grid grid-cols-3 gap-4">
-            {accounts.map((acc: Account) => (
-              <Card key={acc.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/account/${acc.id}`)}>
-                <CardHeader>
-                  <CardTitle>{acc.account_name}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
-                  Conta criada em {new Date(acc.created_at).toLocaleDateString()}
-                  <Button onClick={() => handleDeleteAccount(acc.id)} className="w-1/2">Delete</Button>
-                </CardContent>
-              </Card>
-            ))}
-          </section>
+
+            <section className="grid grid-cols-3 gap-4">
+              {accounts.map((acc: Account) => (
+                <Card key={acc.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/account/${acc.id}`)}>
+                  <CardHeader>
+                    <CardTitle>{acc.account_name}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
+                    Conta criada em {new Date(acc.created_at).toLocaleDateString()}
+                    <Button onClick={() => handleDeleteAccount(acc.id)} className="w-1/2">Delete</Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </section>
         )}
       </main>
     </div>

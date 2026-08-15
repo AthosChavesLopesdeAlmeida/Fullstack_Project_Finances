@@ -7,4 +7,5 @@ export interface Budget {
   end_date: string
   created_at: string
   updated_at: string
+  total_spent: number
 }
