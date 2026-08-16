@@ -1,9 +1,9 @@
 'use client'
-
 import { useState, useEffect } from "react"
 import { apiFetch } from "@/lib/fetcher"
 import { useRouter } from "next/navigation"
 import { User } from "@/types/user"
+import { House, CircleUserRound, ChartColumn, } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { 
@@ -76,9 +76,18 @@ return (
   <div className="flex min-h-screen">
     <nav className="w-56 shrink-0 border-r shadow-sm flex flex-col gap-3 p-4">
       <h3 className="font-semibold mb-2">Menu</h3>
-      <Button variant="ghost" className="justify-start hover:cursor-pointer">My account</Button>
-      <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
-      <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}> 
+          <CircleUserRound className="w-4 h-4 mr-2"/> My account
+        </Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">
+          <ChartColumn className="w-4 h-4 mr-2"/> Dashboard
+        </Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/')}>
+          <House className="w-4 h-4 mr-2"/> Home
+        </Button>
     </nav>
 
     <main className="flex-1 p-8 flex flex-col gap-6">

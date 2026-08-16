@@ -7,6 +7,8 @@ import { useParams } from "next/navigation"
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { House, CircleUserRound, ChartColumn, Trash2, Plus } from "lucide-react";
+
 
 import { 
   Dialog, 
@@ -133,16 +135,24 @@ export default function Home() {
       <nav className="w-56 shrink-0 border-r shadow-sm flex flex-col gap-3 p-4">
         <h3 className="font-semibold mb-2">Menu</h3>
 
-        {/* Links verdadeiros serão adicionados mais tarde */}
-        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}>My account</Button>
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}> 
+          <CircleUserRound className="w-4 h-4 mr-2"/> My account
+        </Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">
+          <ChartColumn className="w-4 h-4 mr-2"/> Dashboard
+        </Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/')}>
+          <House className="w-4 h-4 mr-2"/> Home
+        </Button>
       </nav>
 
       <main className="flex-1 p-8 flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">Your budgets</h2>
           <Button onClick={() => setIsFormOpen((prev) => !prev)} className="hover:cursor-pointer">
+            <Plus className="w-4 h-4 mr-2"/>
             {isFormOpen ? 'Cancel' : 'Create budget'}
           </Button>
         </div>
@@ -204,7 +214,7 @@ export default function Home() {
 
                   {error && <p className="text-red-500 text-sm">{error}</p>}
 
-                  <Button type="submit" className="w-fit hover:cursor-pointer">Create</Button>
+                  <Button type="submit" className="w-fit hover:cursor-pointer"> <Plus className="w-4 h-4 mr-2"/> Create</Button>
                 </div>
               </form>
           </DialogContent>
@@ -294,7 +304,9 @@ export default function Home() {
 
                     <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                       Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2 bg-red-500 hover:bg-red-900">Delete</Button>
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                       <Trash2 className="w-4 h-4 mr-2"/> Delete
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
@@ -314,7 +326,9 @@ export default function Home() {
 
                     <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                       Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2 bg-red-500 hover:bg-red-900">Delete</Button>
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                       <Trash2 className="w-4 h-4 mr-2"/> Delete
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}
@@ -334,7 +348,9 @@ export default function Home() {
 
                     <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                       Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/2 bg-red-500 hover:bg-red-900">Delete</Button>
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                       <Trash2 className="w-4 h-4 mr-2"/> Delete
+                      </Button>
                     </CardContent>
                   </Card>
                 ))}

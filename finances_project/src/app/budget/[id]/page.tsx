@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge"
+import { House, CircleUserRound, ChartColumn, Plus } from "lucide-react";
+
 
 import { 
   Dialog, 
@@ -145,10 +147,17 @@ const Page = () => {
       <nav className="w-56 shrink-0 border-r shadow-sm flex flex-col gap-3 p-4">
         <h3 className="font-semibold mb-2">Menu</h3>
 
-        {/* Links verdadeiros mais tarde */}
-        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}>Your account</Button>
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">Dashboard</Button>
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">How to use</Button>
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/me')}> 
+          <CircleUserRound className="w-4 h-4 mr-2"/> My account
+        </Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer">
+          <ChartColumn className="w-4 h-4 mr-2"/> Dashboard
+        </Button>
+
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/')}>
+          <House className="w-4 h-4 mr-2"/> Home
+        </Button>
       </nav>
 
       <main className="flex-1 p-8 flex flex-col gap-6">
@@ -156,6 +165,7 @@ const Page = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">Your budget</h2>
             <Button onClick={() => setIsFormOpen((prev) => !prev)} className="hover:cursor-pointer">
+              <Plus className="w-4 h-4 mr-2"/>
               {isFormOpen ? 'Cancel' : 'Submit expense'}
             </Button>
           </div>
@@ -228,7 +238,7 @@ const Page = () => {
 
                   {error && <p className="text-red-500 text-sm">{error}</p>}
 
-                  <Button type="submit" className="w-fit hover:cursor-pointer">Create</Button>
+                  <Button type="submit" className="w-fit hover:cursor-pointer"> <Plus className="w-4 h-4 mr-2"/> Create</Button>
                 </div>
               </form>
           </DialogContent>
