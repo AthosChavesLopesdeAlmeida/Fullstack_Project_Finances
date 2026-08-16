@@ -304,7 +304,7 @@ export default function Home() {
 
                     <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                       Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer" variant="destructive">
                        <Trash2 className="w-4 h-4 mr-2"/> Delete
                       </Button>
                     </CardContent>
@@ -326,7 +326,7 @@ export default function Home() {
 
                     <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                       Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer" variant="destructive">
                        <Trash2 className="w-4 h-4 mr-2"/> Delete
                       </Button>
                     </CardContent>
@@ -348,7 +348,7 @@ export default function Home() {
 
                     <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                       Start: {new Date(bud.start_date).toLocaleDateString()} - End: {new Date(bud.end_date).toLocaleDateString()}
-                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                      <Button onClick={() => handleDeleteBudget(bud.id)} className="w-1/3 cursor-pointer" variant="destructive">
                        <Trash2 className="w-4 h-4 mr-2"/> Delete
                       </Button>
                     </CardContent>

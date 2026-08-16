@@ -195,8 +195,7 @@ export default function Home() {
                   </CardHeader>
                   <CardContent className="text-sm text-muted-foreground grid grid cols-1 gap-4">
                     Conta criada em {new Date(acc.created_at).toLocaleDateString()}
-                    <Button onClick={() => handleDeleteAccount(acc.id)} 
-                    className="w-1/4 cursor-pointer bg-red-600 opacity-70 text-red-300 hover:bg-red-800">
+                    <Button onClick={() => handleDeleteAccount(acc.id)} variant="destructive" className="w-1/4 cursor-pointer">
                       <Trash2 className="w-4 h-4 mr-2"/> Delete 
                     </Button>
                   </CardContent>
