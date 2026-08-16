@@ -296,7 +296,9 @@ export default function Home() {
 
               <section className="grid grid-cols-4 gap-6 p-3">
                 {budgets.filter((bud) => classifyBudget(bud) === 'active').map((bud: Budget)=> (
-                  <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
+                  <Card key={bud.id} 
+                  className="dark hover:cursor-pointer hover:shadow-md hover:opacity-98 transition-opacity duration-300 ease-in-out" 
+                  onClick={() => router.push(`/budget/${bud.id}`)}>
                     <CardHeader className="gap-4">
                       <CardTitle>{bud.budget_name}</CardTitle>
                       <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
@@ -318,7 +320,9 @@ export default function Home() {
 
               <section className="grid grid-cols-4 gap-6 p-3">
                 {budgets.filter((bud) => classifyBudget(bud) === 'expired').map((bud: Budget) => (
-                  <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
+                  <Card key={bud.id} 
+                  className="dark hover:cursor-pointer hover:shadow-md hover:opacity-98 transition-opacity duration-300 ease-in-out" 
+                  onClick={() => router.push(`/budget/${bud.id}`)}>
                     <CardHeader className="gap-4">
                       <CardTitle>{bud.budget_name}</CardTitle>
                       <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>
@@ -340,7 +344,9 @@ export default function Home() {
 
               <section className="grid grid-cols-4 gap-6 p-3">
                 {budgets.filter((bud) => classifyBudget(bud) === 'exceeded').map((bud: Budget) => (
-                  <Card key={bud.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/budget/${bud.id}`)}>
+                  <Card key={bud.id} 
+                  className="dark hover:cursor-pointer hover:shadow-md hover:opacity-98 transition-opacity duration-300 ease-in-out" 
+                  onClick={() => router.push(`/budget/${bud.id}`)}>
                     <CardHeader className="gap-4">
                       <CardTitle>{bud.budget_name}</CardTitle>
                       <CardDescription>Value: ${Number(bud.budget_value).toFixed(2)}</CardDescription>

@@ -189,7 +189,9 @@ export default function Home() {
 
             <section className="grid grid-cols-3 gap-4">
               {accounts.map((acc: Account) => (
-                <Card key={acc.id} className="dark hover:cursor-pointer" onClick={() => router.push(`/account/${acc.id}`)}>
+                <Card key={acc.id} 
+                className="dark hover:cursor-pointer hover:shadow-md hover:opacity-98 transition-opacity duration-300 ease-in-out" 
+                onClick={() => router.push(`/account/${acc.id}`)}>
                   <CardHeader>
                     <CardTitle>{acc.account_name}</CardTitle>
                   </CardHeader>
