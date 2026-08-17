@@ -21,7 +21,7 @@ const SpendingByAccount = () => {
   const fetchChartData = async () => {
     setIsLoading(true)
 
-    const { ok, status, data } = await apiFetch('/api/dashboard/spending_by_account', {
+    const { ok, status, data: responseData } = await apiFetch('/api/dashboard/spending_by_account', {
       method: 'GET'
     })
 
@@ -32,12 +32,12 @@ const SpendingByAccount = () => {
     }
 
     if (!ok) {
-      setError(data?.message || 'Unable to fetch data')
+      setError(responseData?.message || 'Unable to fetch data')
       setIsLoading(false)
       return
     }
 
-    setData(data)
+    setData(responseData)
     setIsLoading(false)
   }
 
@@ -45,39 +45,36 @@ const SpendingByAccount = () => {
     fetchChartData()
   }, [])
 
-
   const chartConfig = {
-    account: {
-      label: "Account",
-      color: "var(--chart-1)",
+    total: {
+      label: "Total spent",
+      color: "var(--chart-2)",
     },
   } satisfies ChartConfig
 
   if (isLoading === true) {
-    return <h3>Loading...</h3>
+    return <h3 className="text-sm text-muted-foreground">Loading...</h3>
   }
 
   if (error) {
-    return <h3 className="bg-red-600">{error}</h3>
+    return <p className="text-sm text-red-500">{error}</p>
   }
 
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="h-[300px] w-full">
       <BarChart accessibilityLayer data={data}>
-        <CartesianGrid vertical={false}>
-          <XAxis
-          dataKey="Account"
+        <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey="account_name"
           tickLine={false}
           tickMargin={10}
           axisLine={false}
-          tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <ChartTooltip
+        />
+        <ChartTooltip
           cursor={false}
-          content={<ChartTooltipContent hideLabel/>}
-          />
-          <Bar dataKey="Account" fill="bg-blue-300" radius={8}/>
-        </CartesianGrid>
+          content={<ChartTooltipContent hideLabel />}
+        />
+        <Bar dataKey="total" fill="var(--color-total)" radius={8} />
       </BarChart>
     </ChartContainer>
   )

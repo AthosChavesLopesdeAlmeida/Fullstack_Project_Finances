@@ -61,7 +61,7 @@ const SpendingByMonth = () => {
   }
 
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="h-[300px] w-full">
       <LineChart
         accessibilityLayer
         data={data}

@@ -1,10 +1,10 @@
 'use client'
-import SpendingByAccount from '../../components/dashboard/spendingByAccount'
-import SpendingByCategory from '../../components/dashboard/spendingByCategory'
-import SpendingByMonth from '../../components/dashboard/spendingByMonth'
+import SpendingByAccount from '@/components/dashboard/spendingByAccount'
+import SpendingByCategory from '@/components/dashboard/spendingByCategory'
+import SpendingByMonth from '@/components/dashboard/spendingByMonth'
 import { House, CircleUserRound, ChartColumn } from "lucide-react";
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { 
   Card,
@@ -35,26 +35,16 @@ const Page = () => {
         </Button>
       </nav>
 
-      <main className="flex-1 p-8 flex flex-col gap-6">
+      <main className="flex-1 p-8 flex flex-col gap-8">
         <div className="flex items-center justify-start">
-          <h2 className="text-2xl font-bold">Your budgets</h2>
+          <h2 className="text-2xl font-bold">Your dashboard</h2>
         </div>
 
-        <section className="flex flex-col gap-15">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
-              <CardTitle>Spendings by account</CardTitle>
-              <CardDescription>This graph indicates how much you have spent for each of your accounts</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <SpendingByAccount/>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Spendings by category</CardTitle>
-              <CardDescription>This graph indicates your spendings grouped by expense categories</CardDescription>
+              <CardTitle>Spending by category</CardTitle>
+              <CardDescription>Your spendings grouped by expense categories</CardDescription>
             </CardHeader>
             <CardContent>
               <SpendingByCategory/>
@@ -63,14 +53,24 @@ const Page = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Spendings by month</CardTitle>
-              <CardDescription>This graph indicates your spendings for each month of the year</CardDescription>
+              <CardTitle>Spending by account</CardTitle>
+              <CardDescription>How much you have spent for each of your accounts</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SpendingByAccount/>
+            </CardContent>
+          </Card>
+
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle>Spending by month</CardTitle>
+              <CardDescription>Your spendings for each month of the year</CardDescription>
             </CardHeader>
             <CardContent>
               <SpendingByMonth/>
             </CardContent>
           </Card>
-        </section>
+        </div>
       </main>
     </div>
   )

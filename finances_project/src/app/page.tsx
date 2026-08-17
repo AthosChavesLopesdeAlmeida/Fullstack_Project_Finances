@@ -101,7 +101,7 @@ export default function Home() {
           <CircleUserRound className="w-4 h-4 mr-2"/> My account
         </Button>
 
-        <Button variant="ghost" className="justify-start hover:cursor-pointer">
+        <Button variant="ghost" className="justify-start hover:cursor-pointer" onClick={() => router.push('/dashboard')}>
           <ChartColumn className="w-4 h-4 mr-2"/> Dashboard
         </Button>
 

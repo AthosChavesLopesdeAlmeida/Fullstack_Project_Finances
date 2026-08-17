@@ -9,6 +9,8 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
   type ChartConfig,
 } from "@/components/ui/chart"
 
@@ -21,7 +23,7 @@ const SpendingByCategory = () => {
   const fetchChartData = async () => {
     setIsLoading(true)
 
-    const { ok, status, data } = await apiFetch('/api/dashboard/spending_by_category', {
+    const { ok, status, data: responseData } = await apiFetch('/api/dashboard/spending_by_category', {
       method: 'GET'
     })
 
@@ -32,12 +34,12 @@ const SpendingByCategory = () => {
     }
 
     if (!ok) {
-      setError(data?.message || 'Unable to fetch data')
+      setError(responseData?.message || 'Unable to fetch data')
       setIsLoading(false)
       return
     }
 
-    setData(data)
+    setData(responseData)
     setIsLoading(false)
   }
 
@@ -45,59 +47,31 @@ const SpendingByCategory = () => {
     fetchChartData()
   }, [])
 
-
   const chartConfig = {
     total: {
       label: "Total gasto",
     },
-    Food: {
-      label: "Food",
-      color: "var(--chart-1)",
-    },
-    Transport: {
-      label: "Transport",
-      color: "var(--chart-2)",
-    },
-    Housing: {
-      label: "Housing",
-      color: "var(--chart-3)",
-    },
-    Health: {
-      label: "Health",
-      color: "var(--chart-4)",
-    },
-    Education: {
-      label: "Education",
-      color: "var(--chart-5)",
-    },
-    Leisure: {
-      label: "Leisure",
-      color: "var(--chart-1)",
-    },
-    Shopping: {
-      label: "Shopping",
-      color: "var(--chart-2)",
-    },
-    Bills: {
-      label: "Bills",
-      color: "var(--chart-3)",
-    },
-    Other: {
-      label: "Other",
-      color: "var(--chart-4)",
-    },
+    Food: { label: "Food", color: "var(--chart-1)" },
+    Transport: { label: "Transport", color: "var(--chart-2)" },
+    Housing: { label: "Housing", color: "var(--chart-3)" },
+    Health: { label: "Health", color: "var(--chart-4)" },
+    Education: { label: "Education", color: "var(--chart-5)" },
+    Leisure: { label: "Leisure", color: "var(--chart-1)" },
+    Shopping: { label: "Shopping", color: "var(--chart-2)" },
+    Bills: { label: "Bills", color: "var(--chart-3)" },
+    Other: { label: "Other", color: "var(--chart-4)" },
   } satisfies ChartConfig
 
   if (isLoading === true) {
-    return <h3>Loading...</h3>
+    return <h3 className="text-sm text-muted-foreground">Loading...</h3>
   }
 
   if (error) {
-    return <h3 className="bg-red-600">{error}</h3>
+    return <p className="text-sm text-red-500">{error}</p>
   }
 
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[300px]">
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <Pie
@@ -108,7 +82,9 @@ const SpendingByCategory = () => {
           }))}
           dataKey="total"
           nameKey="category"
+          innerRadius={60}
         />
+        <ChartLegend content={<ChartLegendContent nameKey="category" />} />
       </PieChart>
     </ChartContainer>
   )
